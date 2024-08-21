@@ -14,17 +14,18 @@ jobs:
       - name: checkout the repository
         uses: actions/checkout@v4
 
-      - name: Clone the repository
-        uses: actions/checkout@v4
-        with:
-          repository: "nvlannasik/github-action-manifest"
-          path: "dockerfile"
+      - name: Manually Clone the Repository
+        run: |
+          mkdir -p $HOME/external_repos
+          git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/nvlannasik/github-action-manifest.git $HOME/external_repos/github-action-manifest
+          cd $HOME/external_repos/github-action-manifest
+          ls -la
 
       - name: printenv
         run: printenv
 
       - name: Display Files
-        run: cat dockerfile/${{ inputs.dockerfile_name }}
+        run: cat $HOME/external_repos/github-action-manifest/dockerfile/${{ inputs.dockerfile_name }}
 
       - name: Create a ENV_EXAMPLE
         run: echo "example_env=dev" > env-file
