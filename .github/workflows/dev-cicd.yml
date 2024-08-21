@@ -6,8 +6,6 @@ on:
 jobs:
   clone-repo-manifest:
     runs-on: ubuntu-latest
-    outputs:
-      example_env: ${{ steps.set_env.outputs.example_env }}
     steps:
       - name: Clone the repository
         uses: actions/checkout@v4
@@ -16,14 +14,13 @@ jobs:
         run: echo ls -l
 
       - name: Create a ENV_EXAMPLE
-        id: set_env
-        run: echo "example_env=dev" >> $GITHUB_ENV
+        run: echo "example_env=dev" > env-file
 
       - name: Upload ENV_EXAMPLE as artifact
         uses: actions/upload-artifact@v3
         with:
           name: env-file
-          path: $GITHUB_ENV
+          path: env-file
 
   build-image:
     runs-on: ubuntu-latest
