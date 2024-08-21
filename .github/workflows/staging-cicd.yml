@@ -2,16 +2,29 @@ name: CI/CD Pipeline for staging Environment
 
 on:
   workflow_call:
+    inputs:
+      dockerfile_name:
+        required: true
+        type: string
 
 jobs:
   clone-repo-manifest:
     runs-on: ubuntu-latest
     steps:
-      - name: Clone the repository
+      - name: checkout the repository
         uses: actions/checkout@v4
 
+      - name: Clone the repository
+        uses: actions/checkout@v4
+        with:
+          repository: "nvlannasik/github-action-manifest"
+          path: "dockerfile"
+
+      - name: printenv
+        run: printenv
+
       - name: Display Files
-        run: echo ls -l
+        run: cat dockerfile/${{ inputs.dockerfile_name }}
 
       - name: Create a ENV_EXAMPLE
         run: echo "example_env=dev" > env-file
