@@ -17,6 +17,8 @@ jobs:
       - name: Manually Clone the Repository
         run: |
           mkdir -p $HOME/external_repos
+          echo https://github.com/nvlannasik/github-action-manifest.git
+          echo ${{ secrets.GH_TOKEN }}
           git clone https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/nvlannasik/github-action-manifest.git $HOME/external_repos/github-action-manifest
           cd $HOME/external_repos/github-action-manifest
           ls -la
