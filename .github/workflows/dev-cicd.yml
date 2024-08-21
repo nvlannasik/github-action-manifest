@@ -2,6 +2,10 @@ name: CI/CD Pipeline for dev Environment
 
 on:
   workflow_call:
+    inputs:
+      dockerfile_name:
+        required: true
+        type: string
 
 jobs:
   clone-repo-manifest:
@@ -20,7 +24,7 @@ jobs:
         run: printenv
 
       - name: Display Files
-        run: cat dockerfile/${{ env.DOCKERFILE_NAME }}
+        run: cat dockerfile/${{ inputs.dockerfile_name }}
 
       - name: Create a ENV_EXAMPLE
         run: echo "example_env=dev" > env-file
