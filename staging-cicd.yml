@@ -1,0 +1,17 @@
+name: CI/CD Pipeline for Staging Environment
+
+on:
+  workflow_call:
+
+jobs:
+  testing-workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run tests
+        run: echo "Running tests for Staging environment"
+
+      - name: Deploy to dev
+        run: echo "Deploying to Staging environment"
