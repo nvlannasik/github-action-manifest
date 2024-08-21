@@ -7,11 +7,17 @@ jobs:
   clone-repo-manifest:
     runs-on: ubuntu-latest
     steps:
+      - name: checkout the repository
+        uses: actions/checkout@v4
+
       - name: Clone the repository
         uses: actions/checkout@v4
         with:
           repository: "nvlannasik/github-action-manifest"
           path: "dockerfile"
+
+      - name: printenv
+        run: printenv
 
       - name: Display Files
         run: cat dockerfile/${{ env.DOCKERFILE_NAME }}
