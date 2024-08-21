@@ -9,9 +9,12 @@ jobs:
     steps:
       - name: Clone the repository
         uses: actions/checkout@v4
+        with:
+          repository: "nvlannasik/github-action-manifest"
+          path: "dockerfile"
 
       - name: Display Files
-        run: echo ls -l
+        run: cat dockerfile/${{ env.DOCKERFILE_NAME }}
 
       - name: Create a ENV_EXAMPLE
         run: echo "example_env=dev" > env-file
