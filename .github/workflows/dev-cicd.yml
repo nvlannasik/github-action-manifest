@@ -4,7 +4,7 @@ on:
   workflow_call:
 
 jobs:
-  testing-workflow:
+  deploy-to-ecs-dev:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -15,3 +15,6 @@ jobs:
 
       - name: Deploy to dev
         run: echo "Deploying to dev environment"
+
+      - name: Notify
+        run: echo "Notifying the team about the deployment to dev environment"
