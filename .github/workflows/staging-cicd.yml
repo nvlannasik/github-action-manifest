@@ -43,7 +43,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: properties-repo
-          path: ${{ github.workspace }}/downloaded-properties
+          path: ../downloaded-properties
 
       - name: check files in the repository
         run: |
@@ -51,7 +51,7 @@ jobs:
 
       - name: Check downloaded properties-repo-manifest
         run: |
-          ls -la ${{ github.workspace }}/downloaded-properties
+          ls -la ../downloaded-properties
 
       - name: check files in the repository
         run: |
@@ -59,4 +59,4 @@ jobs:
 
       - name: Display Files
         run: |
-          cat ${{ github.workspace }}/downloaded-properties/dockerfile/${{ inputs.dockerfile_name }}
+          cat ../downloaded-properties/dockerfile/${{ inputs.dockerfile_name }}
