@@ -11,27 +11,26 @@ on:
         required: true
 
 jobs:
-  prepare-properites-repo-manifest:
+  prepare-properties-repo-manifest:
     runs-on: ubuntu-latest
     steps:
       - name: Clone repository manifest
         run: |
-          mkdir -p $HOME/properties-repo-manifest
-          echo https://github.com/nvlannasik/github-action-manifest.git
-          echo ${{ secrets.GH_TOKEN }}
-          git clone https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/nvlannasik/github-action-manifest.git $HOME/properties-repo-manifest/github-action-manifest
-          cd $HOME/properties-repo-manifest/github-action-manifest
+          mkdir -p ${{ github.workspace }}/properties-repo-manifest
+          echo "Cloning into: ${{ github.workspace }}/properties-repo-manifest/github-action-manifest"
+          git clone https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/nvlannasik/github-action-manifest.git ${{ github.workspace }}/properties-repo-manifest/github-action-manifest
+          cd ${{ github.workspace }}/properties-repo-manifest/github-action-manifest
           ls -la
 
       - name: Upload properties-repo as artifact
         uses: actions/upload-artifact@v3
         with:
           name: properties-repo
-          path: $HOME/properties-repo-manifest/github-action-manifest
+          path: ${{ github.workspace }}/properties-repo-manifest/github-action-manifest
 
   build-image:
     runs-on: ubuntu-latest
-    needs: prepare-properites-repo-manifest
+    needs: prepare-properties-repo-manifest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -40,11 +39,13 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: properties-repo
+          path: ${{ github.workspace }}/downloaded-properties
 
       - name: Check downloaded properties-repo-manifest
         run: |
-          ls -la $HOME/properties-repo
-          ls -la $HOME/properties-repo/github-action-manifest
+          ls -la ${{ github.workspace }}/downloaded-properties
+          ls -la ${{ github.workspace }}/downloaded-properties/github-action-manifest
 
       - name: Display Files
-        run: cat $HOME/properties-repo/github-action-manifest/dockerfile/${{ inputs.dockerfile_name }}
+        run: |
+          cat ${{ github.workspace }}/downloaded-properties/github-action-manifest/dockerfile/${{ inputs.dockerfile_name }}
