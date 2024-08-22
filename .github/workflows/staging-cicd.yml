@@ -52,3 +52,7 @@ jobs:
       - name: check files in the repository
         run: |
           ls -la
+
+      - name: display dockerfile again
+        run: |
+          cat ${{ github.workspace }}/downloaded-properties/dockerfile/${{ inputs.dockerfile_name }}
