@@ -23,7 +23,7 @@ jobs:
           ls -la
 
       - name: Upload properties-repo as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: properties-repo
           path: ${{ github.workspace }}/properties-repo-manifest/github-action-manifest
@@ -32,11 +32,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: prepare-properties-repo-manifest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
       - name: Download external repository as artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: properties-repo
           path: ${{ github.workspace }}/downloaded-properties
@@ -44,8 +41,14 @@ jobs:
       - name: Check downloaded properties-repo-manifest
         run: |
           ls -la ${{ github.workspace }}/downloaded-properties
-          ls -la ${{ github.workspace }}/downloaded-properties/github-action-manifest
 
       - name: Display Files
         run: |
-          cat ${{ github.workspace }}/downloaded-properties/github-action-manifest/dockerfile/${{ inputs.dockerfile_name }}
+          cat ${{ github.workspace }}/downloaded-properties/dockerfile/${{ inputs.dockerfile_name }}
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: check files in the repository
+        run: |
+          ls -la
